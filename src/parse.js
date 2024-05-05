@@ -8,11 +8,27 @@ import {
 } from './constants.js';
 
 /**
+ * DEFAULT
+ * Revive a value serialized with `devalue.stringify`
+ * @type {Record<string, (value: any) => any> | undefined}
+ */
+let defaultRevivers;
+
+/**
+ * Revive a value serialized with `devalue.stringify`
+ * @param {Record<string, (value: any) => any> | undefined} [revivers]
+ */
+export function setDefaultStringifyRevivers(revivers) {
+  defaultRevivers = revivers;
+}
+
+/**
  * Revive a value serialized with `devalue.stringify`
  * @param {string} serialized
  * @param {Record<string, (value: any) => any>} [revivers]
  */
 export function parse(serialized, revivers) {
+	revivers = revivers ?? defaultRevivers;
 	return unflatten(JSON.parse(serialized), revivers);
 }
 
