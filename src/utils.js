@@ -100,7 +100,7 @@ export function stringify_string(str) {
 
 /** @param {Record<string | symbol, any>} object */
 export function enumerable_symbols(object) {
-	return Object.getOwnPropertySymbols(object).filter(
-		(symbol) => Object.getOwnPropertyDescriptor(object, symbol).enumerable
+	return Object?.getOwnPropertySymbols(object)?.filter(
+		(symbol) => Object?.getOwnPropertyDescriptor(object, symbol)?.enumerable
 	);
 }
