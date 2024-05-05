@@ -16,11 +16,27 @@ import {
 } from './constants.js';
 
 /**
+ * DEFAULT
+ * Turn a value into a JSON string that can be parsed with `devalue.parse`
+ * @type {Record<string, (value: any) => any> | undefined}
+ */
+let defaultReducers;
+
+/**
+ * Set default reducers
+ * @param {Record<string, (value: any) => any> | undefined} [reducers]
+ */
+export function setDefaultStringifyReducers(reducers) {
+  defaultReducers = reducers;
+}
+
+/**
  * Turn a value into a JSON string that can be parsed with `devalue.parse`
  * @param {any} value
  * @param {Record<string, (value: any) => any>} [reducers]
  */
 export function stringify(value, reducers) {
+	reducers = reducers ?? defaultReducers;
 	/** @type {any[]} */
 	const stringified = [];
 
@@ -181,7 +197,7 @@ export function stringify(value, reducers) {
 	const index = flatten(value);
 
 	// special case — value is represented as a negative index
-	if (index < 0) return `${index}`;
+	if ((index ?? 0) < 0) return `${index}`;
 
 	return `[${stringified.join(',')}]`;
 }
