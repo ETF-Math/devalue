@@ -159,6 +159,18 @@ const fixtures = {
 			value: BigInt('1'),
 			js: '1n',
 			json: '[["BigInt","1"]]'
+		},
+		{
+			name: 'Uint8Array',
+			value: new Uint8Array([1, 2, 3]),
+			js: 'new Uint8Array([1,2,3])',
+			json: '[["Uint8Array","AQID"]]'
+		},
+		{
+			name: 'ArrayBuffer',
+			value: new Uint8Array([1, 2, 3]).buffer,
+			js: 'new Uint8Array([1,2,3]).buffer',
+			json: '[["ArrayBuffer","AQID"]]'
 		}
 	],
 
@@ -417,9 +429,10 @@ const fixtures = {
 					return `new Custom(${uneval(value.value)})`;
 				}
 			},
-			reducers: {
+			// test for https://github.com/Rich-Harris/devalue/pull/80
+			reducers: Object.assign(Object.create({ polluted: true }), {
 				Custom: (x) => x instanceof Custom && x.value
-			},
+			}),
 			revivers: {
 				Custom: (x) => new Custom(x)
 			},
@@ -584,13 +597,13 @@ for (const fn of [uneval, stringify]) {
 			class Whatever {}
 			fn({
 				foo: {
-					map: new Map([['key', new Whatever()]])
+					['string-key']: new Map([['key', new Whatever()]])
 				}
 			});
 		} catch (e) {
 			assert.equal(e.name, 'DevalueError');
 			assert.equal(e.message, 'Cannot stringify arbitrary non-POJOs');
-			assert.equal(e.path, '.foo.map.get("key")');
+			assert.equal(e.path, '.foo["string-key"].get("key")');
 		}
 	});
 

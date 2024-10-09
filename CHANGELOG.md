@@ -1,5 +1,15 @@
 # devalue changelog
 
+## 5.1.1
+
+- Only iterate over own properties of reducers ([#80](https://github.com/Rich-Harris/devalue/pull/80))
+
+## 5.1.0
+
+- Handle typed arrays and array buffers ([#69](https://github.com/Rich-Harris/devalue/pull/69))
+- Add `sideEffects: false` to `package.json` ([#81](https://github.com/Rich-Harris/devalue/pull/81))
+- Better errors when keys are invalid identifiers ([#82](https://github.com/Rich-Harris/devalue/pull/82))
+
 ## 5.0.0
 
 - Ignore non-enumerable symbolic keys ([#78](https://github.com/Rich-Harris/devalue/pull/78))
