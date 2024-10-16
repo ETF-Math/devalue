@@ -87,7 +87,7 @@ function binaryToAscii(str) {
   let out = "";
   for (let i = 0; i < str.length; i += 3) {
     /** @type {[number, number, number, number]} */
-    const groupsOfSix = [undefined, undefined, undefined, undefined];
+    const groupsOfSix = /** @type {any} */([undefined, undefined, undefined, undefined]);
     groupsOfSix[0] = str.charCodeAt(i) >> 2;
     groupsOfSix[1] = (str.charCodeAt(i) & 0x03) << 4;
     if (str.length > i + 1) {
